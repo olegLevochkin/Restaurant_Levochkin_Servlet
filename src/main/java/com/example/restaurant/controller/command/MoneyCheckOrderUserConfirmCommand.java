@@ -27,7 +27,7 @@ public class MoneyCheckOrderUserConfirmCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws Exception {
-        Long ind = Long.valueOf(request.getParameter("ind"));
+        final Long ind = Long.valueOf(request.getParameter("ind"));
 
         if (orderService.getByID(Math.toIntExact(ind)).get().isPayed()) {
             return "redirect:/user_confirm";
@@ -41,7 +41,7 @@ public class MoneyCheckOrderUserConfirmCommand implements Command {
                 .equals(enoughtProducts.keySet().stream()
                         .map(enoughtProducts::get).max(Integer::compareTo).get())).collect(Collectors.toList());
 
-        HttpSession session = request.getSession();
+        final HttpSession session = request.getSession();
         String username = "";
 
         if (userService.getByUsername((String) session.getAttribute("username")) != null) {

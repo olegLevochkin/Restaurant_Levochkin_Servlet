@@ -46,7 +46,7 @@ public class JDBCUserDao implements UserDao {
             " WHERE users.id=?";
 
 
-    private Connection connection;
+    private final Connection connection;
 
     JDBCUserDao(Connection connection) {
         this.connection = connection;
@@ -210,7 +210,7 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
@@ -249,7 +249,7 @@ public class JDBCUserDao implements UserDao {
             ResultSet rs = ps.executeQuery();
 
             Map<Long, User> users = extractFromResultSet(rs);
-//            return users.values().stream().findFirst();
+
             return users.values().stream().findFirst().get().getId();
 
         } catch (Exception e) {
@@ -263,7 +263,7 @@ public class JDBCUserDao implements UserDao {
             connection.setAutoCommit(false);
             User user = findByUsername(username);
 
-            if (user.getBalance().compareTo(BigDecimal.valueOf(sum.intValue())) < 0){
+            if (user.getBalance().compareTo(BigDecimal.valueOf(sum.intValue())) < 0) {
                 throw new BankTransactionException("The money in the account is not enough");
             } else {
                 User admin = findByUsername("someuser");

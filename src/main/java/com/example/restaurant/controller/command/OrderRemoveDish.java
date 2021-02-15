@@ -14,11 +14,10 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 public class OrderRemoveDish implements Command {
-
-    private UserService userService;
-    private DishService dishService;
-    private OrderService orderService;
     private static final Logger log = LoggerFactory.getLogger(OrderRemoveDish.class);
+    private final UserService userService;
+    private final DishService dishService;
+    private final OrderService orderService;
 
     public OrderRemoveDish(UserService userService, DishService dishService, OrderService orderService) {
         this.userService = userService;
@@ -28,10 +27,10 @@ public class OrderRemoveDish implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws Exception {
-        HttpSession session = request.getSession();
+        final HttpSession session = request.getSession();
         String username = "";
-        String dishname = request.getParameter("dish");
-        Dish dish = dishService.findByDishName(dishname);
+        final String dishname = request.getParameter("dish");
+        final Dish dish = dishService.findByDishName(dishname);
 
         if (userService.getByUsername((String) session.getAttribute("username")) != null) {
             username = (String) session.getAttribute("username");

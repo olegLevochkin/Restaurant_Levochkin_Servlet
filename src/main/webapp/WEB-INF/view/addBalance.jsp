@@ -7,12 +7,11 @@
 <fmt:setBundle basename="property/messages"/>
 
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title><fmt:message key="balance.title">Our menu</fmt:message></title>
-    <link rel="shortcut icon"
-          href="https://e7.pngegg.com/pngimages/359/699/png-clipart-favicon-computer-icons-icon-design-share-icon-globalization-text-logo.png">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css">
+    <title><fmt:message key="balance.title">Registration</fmt:message></title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -64,12 +63,12 @@
     <form method="post" action="${ pageContext.request.contextPath}/app/addBalance" class="balance__form">
 
         <c:if test="${balanceError == 'true'}">
-            <h3>
+            <h3 class="error">
                 <fmt:message key="balance.error">error</fmt:message>
             </h3>
         </c:if>
         <c:if test="${balanceErrorSum != null}">
-            <h3>
+            <h3 class="error">
                 <fmt:message key="balance.notEnoughtMoney">no money</fmt:message>
             </h3>
         </c:if>

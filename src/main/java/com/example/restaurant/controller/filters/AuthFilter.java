@@ -106,7 +106,6 @@ public class AuthFilter implements Filter {
 
     }
 
-
     @Override
     public void destroy() {
     }

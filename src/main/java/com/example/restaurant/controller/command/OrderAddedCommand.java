@@ -4,6 +4,8 @@ import com.example.restaurant.model.entity.OrderDish;
 import com.example.restaurant.services.OrderService;
 import com.example.restaurant.services.ProductService;
 import com.example.restaurant.services.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,10 +17,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class OrderAddedCommand implements Command {
-
-    private UserService userService;
-    private ProductService productService;
-    private OrderService orderService;
+    private static final Logger log = LoggerFactory.getLogger(OrderAddedCommand.class);
+    private final UserService userService;
+    private final ProductService productService;
+    private final OrderService orderService;
 
     public OrderAddedCommand(UserService userService, ProductService productService, OrderService orderService) {
         this.userService = userService;
@@ -29,14 +31,14 @@ public class OrderAddedCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws Exception {
 
-        HttpSession session = request.getSession();
+        final HttpSession session = request.getSession();
         String username = "";
 
         if (userService.getByUsername((String) session.getAttribute("username")) != null) {
             username = (String) session.getAttribute("username");
         }
 
-        Optional<Long> notCompletedOrderId = orderService.getUnCompletedForUser(username);
+        final Optional<Long> notCompletedOrderId = orderService.getUnCompletedForUser(username);
         OrderDish orderDish;
 
         if (notCompletedOrderId.isPresent()) {
@@ -61,6 +63,7 @@ public class OrderAddedCommand implements Command {
 
         orderDish.setToAdmin(true);
         orderService.updateToAdmin(orderDish);
+        log.info("Add dish to order");
 
         return "redirect:/menu";
     }

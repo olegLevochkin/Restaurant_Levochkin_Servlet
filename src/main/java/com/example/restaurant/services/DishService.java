@@ -24,26 +24,6 @@ public class DishService {
         }
     }
 
-//    public Page<Dish> getAllDishes(Pageable pageable) {
-//        int pageSize = pageable.getPageSize();
-//        int currentPage = pageable.getPageNumber();
-//        int startItem = currentPage * pageSize;
-//        List<Dish> list;
-//        List<Dish> dishes = dishRepository.findAll();
-//
-//        if (dishes.size() < startItem) {
-//            list = Collections.emptyList();
-//        } else {
-//            int toIndex = Math.min(startItem + pageSize, dishes.size());
-//            list = dishes.subList(startItem, toIndex);
-//        }
-//
-//        Page<Dish> dishPage
-//                = new PageImpl<>(list, PageRequest.of(currentPage, pageSize), dishes.size());
-//
-//        return dishPage;
-//    }
-
     public void saveDish(Dish dish) throws Exception {
         try (DishDao dao = daoFactory.createDishDao()) {
             dao.save(dish);
@@ -61,13 +41,6 @@ public class DishService {
             return dao.findByOrder(id);
         }
     }
-    ////////////////////////////
-    public List<Dish> findAllByOrderID(Long id) throws Exception {
-        try (DishDao dao = daoFactory.createDishDao()) {
-            return dao.findAllByOrderID(id);
-        }
-    }
-    ///////////////////////////
 
     public List<Dish> findByOrderIDToUSer(Long id) throws Exception {
         try (DishDao dao = daoFactory.createDishDao()) {

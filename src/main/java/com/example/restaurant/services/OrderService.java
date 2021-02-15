@@ -12,10 +12,7 @@ import java.util.Optional;
 public class OrderService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
-    private JDBCDaoFactory jdbcDaoFactory;
-
     public OrderService() {
-        this.jdbcDaoFactory = new JDBCDaoFactory();
     }
 
     public Optional<Long> getUnCompletedForUser(String username) throws Exception {
@@ -38,7 +35,7 @@ public class OrderService {
 
     public void removeDish(OrderDish orderDish, Dish dish) throws Exception {
         try (OrderDao dao = daoFactory.createOrderDao()) {
-            dao.removeDish(orderDish, dish );
+            dao.removeDish(orderDish, dish);
         }
     }
 

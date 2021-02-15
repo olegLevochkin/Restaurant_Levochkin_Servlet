@@ -11,10 +11,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class AdminCommand implements Command {
+    private static final Logger log = LoggerFactory.getLogger(AdminCommand.class);
     private final OrderService orderService;
     private final ProductService productService;
-
-    private static final Logger log = LoggerFactory.getLogger(AdminCommand.class);
 
     public AdminCommand(OrderService orderService, ProductService productService) {
         this.orderService = orderService;
@@ -26,16 +25,7 @@ public class AdminCommand implements Command {
 
         try {
             request.setAttribute("orderID", orderService.confirmToAdmin());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
             request.setAttribute("products", productService.getAllProducts());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
             if (productService.getAllProducts().stream().anyMatch(s -> s.getAmountHave() < s.getMinAmount())) {
                 return replenish();
             }

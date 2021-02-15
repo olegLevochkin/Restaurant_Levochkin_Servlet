@@ -20,12 +20,11 @@ import java.util.Set;
 
 public class JDBCOrderDao implements OrderDao {
 
-    private Connection connection;
+    private final Connection connection;
 
     JDBCOrderDao(Connection connection) {
         this.connection = connection;
     }
-
 
     @Override
     public void create(OrderDish entity) {
@@ -48,7 +47,6 @@ public class JDBCOrderDao implements OrderDao {
 
             ResultSet rs = ps.executeQuery();
             Map<Long, OrderDish> orders = extractFromResultSet(rs);
-//            return Optional.of(orders.get(id));
             return Optional.of(orders.values().stream().findFirst().get());
 
         } catch (Exception e) {
@@ -72,7 +70,7 @@ public class JDBCOrderDao implements OrderDao {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
@@ -88,11 +86,6 @@ public class JDBCOrderDao implements OrderDao {
         try (PreparedStatement ps = connection.prepareStatement(FIND_BY_USERNAME_QUERY)) {
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
-
-//            Map<Long, OrderDish> resultSet = extractFromResultSet(rs);
-//            if (resultSet.get(0) != null) {
-//                return Optional.of(resultSet.get(0).getId());
-//            }
             if (rs.next()) {
                 return Optional.of(rs.getLong("order_dish.id"));
             }

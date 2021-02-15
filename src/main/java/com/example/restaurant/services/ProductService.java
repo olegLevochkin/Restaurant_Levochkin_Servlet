@@ -12,10 +12,7 @@ public class ProductService {
 
     DaoFactory daoFactory = DaoFactory.getInstance();
 
-    private JDBCDaoFactory jdbcDaoFactory;
-
     public ProductService() {
-        this.jdbcDaoFactory = new JDBCDaoFactory();
     }
 
     public Product getByProductName(String product) throws Exception {

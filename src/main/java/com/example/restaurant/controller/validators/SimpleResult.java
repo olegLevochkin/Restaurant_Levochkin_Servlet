@@ -2,8 +2,8 @@ package com.example.restaurant.controller.validators;
 
 public class SimpleResult implements Result {
 
-    private String message;
-    private boolean ok;
+    private final String message;
+    private final boolean ok;
 
     public SimpleResult(String message, boolean ok) {
         this.message = message;

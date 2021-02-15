@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class UserMapper implements ObjectMapper<User> {
+
     @Override
     public User extractFromResultSet(ResultSet rs) throws SQLException {
 
@@ -23,7 +24,6 @@ public class UserMapper implements ObjectMapper<User> {
             result.addAuthority(Role.USER);
 
         return result;
-
     }
 
     @Override
@@ -31,7 +31,5 @@ public class UserMapper implements ObjectMapper<User> {
         cache.putIfAbsent(entity.getId(), entity);
         return cache.get(entity.getId());
     }
-
-
 }
 

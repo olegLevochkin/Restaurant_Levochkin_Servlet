@@ -12,10 +12,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class AdminCheckOrderCommand implements Command {
-
+    private static final Logger log = LoggerFactory.getLogger(AdminCheckOrderCommand.class);
     private final DishService dishService;
     private final ProductService productService;
-    private static final Logger log = LoggerFactory.getLogger(AdminCheckOrderCommand.class);
 
     public AdminCheckOrderCommand(DishService dishService, ProductService productService) {
         this.dishService = dishService;
@@ -25,7 +24,7 @@ public class AdminCheckOrderCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws Exception {
 
-        Long ind = Long.valueOf(request.getParameter("orderID"));
+        final Long ind = Long.valueOf(request.getParameter("orderID"));
         request.setAttribute("orderID", ind);
 
         Map<Dish, Long> orderClient = new HashMap<>();

@@ -4,7 +4,6 @@ import com.example.restaurant.exception.DeleteDependentException;
 import com.example.restaurant.model.dao.ProductDao;
 import com.example.restaurant.model.dao.mapper.ProductMapper;
 import com.example.restaurant.model.entity.Product;
-import com.example.restaurant.model.entity.Role;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +19,7 @@ import java.util.Set;
 
 public class JDBCProductDao implements ProductDao {
 
-    private Connection connection;
+    private final Connection connection;
 
     JDBCProductDao(Connection connection) {
         this.connection = connection;
@@ -44,8 +43,6 @@ public class JDBCProductDao implements ProductDao {
             "product.product_in_box AS \"product.product_in_box\"\n" +
             "FROM product";
 
-
-    //work
     @Override
     public Set<Product> findAll() {
         LinkedHashSet<Product> result;
@@ -73,7 +70,7 @@ public class JDBCProductDao implements ProductDao {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
@@ -144,7 +141,6 @@ public class JDBCProductDao implements ProductDao {
     private static final String CREATE_PRODUCT = "INSERT INTO product (amount_have," +
             " max_amount, min_amount, product, product_in_box ) VALUES (?, ?, ?, ?, ?)";
 
-
     public void save(Product entity) {
 
         try (PreparedStatement ps = connection.prepareStatement
@@ -163,15 +159,12 @@ public class JDBCProductDao implements ProductDao {
                 entity.setId(id);
             }
 
-//            ? проверить
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     private static final String UPDATE_PRODUCT = "UPDATE product SET amount_have = ? WHERE product.id = ?";
-
 
     public void updateProducts(Product entity) {
 
@@ -186,7 +179,6 @@ public class JDBCProductDao implements ProductDao {
             throw new RuntimeException(e);
         }
     }
-
 
     private LinkedHashMap<Long, Product> extractFromResultSet(ResultSet rss) throws SQLException {
 

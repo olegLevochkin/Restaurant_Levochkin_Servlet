@@ -8,9 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class BalancePageCommand implements Command {
-    private final UserService userService;
-
     private static final Logger log = LoggerFactory.getLogger(BalancePageCommand.class);
+    private final UserService userService;
 
     public BalancePageCommand(UserService userService) {
         this.userService = userService;
@@ -19,7 +18,7 @@ public class BalancePageCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws Exception {
 
-        HttpSession session = request.getSession();
+        final HttpSession session = request.getSession();
         String username = "";
 
         if (userService.getByUsername((String) session.getAttribute("username")) != null) {

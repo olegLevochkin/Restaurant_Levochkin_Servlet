@@ -7,11 +7,10 @@
 <fmt:setBundle basename="property/messages"/>
 
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title><fmt:message key="admin.title">Our menu</fmt:message></title>
-    <link rel="shortcut icon"
-          href="https://e7.pngegg.com/pngimages/359/699/png-clipart-favicon-computer-icons-icon-design-share-icon-globalization-text-logo.png">
+    <title><fmt:message key="admin.title">ADMIN</fmt:message></title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -61,17 +60,15 @@
         <form class="dishes_form__add" method="post" action="${ pageContext.request.contextPath}/app/add/addDish"
               enctype="multipart/form-data">
 
-            <h2><fmt:message key="addDish.add">ADD Dish</fmt:message></h2>
-
             <c:if test="${error !=null}">
                 <h3 class="error">
-                    <fmt:message key="addDish.add"></fmt:message>
+                    <fmt:message key="addDish.add">error</fmt:message>
                 </h3>
             </c:if>
 
             <c:if test="${error1 !=null}">
                 <h3 class="error">
-                    <fmt:message key="dish.size.error"></fmt:message>
+                    <fmt:message key="dish.size.error">error</fmt:message>
                 </h3>
             </c:if>
 
@@ -94,13 +91,11 @@
                     <fmt:message key="dish.ukrName"/>
                 </label>
                 <input class="form-control" id="nameUkr" name="nameUkr">
-                <%--                <span class="error" th:errors="*{nameUkr}"></span>--%>
             </div>
 
             <div class="form-group">
                 <label for="name"><fmt:message key="dish"/></label>
                 <input class="form-control" id="name" name="name">
-                <%--        <span class="error" th:errors="*{name}"></span>--%>
             </div>
 
             <div class="form-group">
@@ -108,7 +103,6 @@
                     <fmt:message key="dish.price">price</fmt:message>
                 </label>
                 <input class="form-control" id="price" name="price" type="number">
-                <%--        <span class="error" th:errors="*{price}"></span>--%>
             </div>
 
             <div class="form-group">
@@ -118,7 +112,6 @@
                             <fmt:message key="prod.${prodT.product}">product</fmt:message>
                         </label>
                         <input name="${prodT.product}" id="${prodT.product}" value="${prodT.product}" type="checkbox">
-                            <%--                <span class="error" th:errors="*{productsForDish}"></span>--%>
                     </div>
                 </c:forEach>
             </div>

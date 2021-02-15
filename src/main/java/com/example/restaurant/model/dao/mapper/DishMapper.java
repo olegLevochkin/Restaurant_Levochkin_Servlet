@@ -1,8 +1,6 @@
 package com.example.restaurant.model.dao.mapper;
 
 import com.example.restaurant.model.entity.Dish;
-import com.example.restaurant.model.entity.OrderDish;
-import com.example.restaurant.model.entity.User;
 
 import java.math.BigInteger;
 import java.sql.ResultSet;
@@ -10,6 +8,7 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class DishMapper implements ObjectMapper<Dish> {
+
     @Override
     public Dish extractFromResultSet(ResultSet rs) throws SQLException {
         Dish dish = new Dish();
@@ -22,6 +21,7 @@ public class DishMapper implements ObjectMapper<Dish> {
 
         return dish;
     }
+
     @Override
     public Dish makeUnique(Map<Long, Dish> cache, Dish entity) {
         cache.putIfAbsent(entity.getId(), entity);

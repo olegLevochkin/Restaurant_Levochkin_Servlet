@@ -18,22 +18,16 @@ import java.io.InputStreamReader;
 import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @MultipartConfig
 public class DishAddCommand implements Command {
 
-    private DishService dishService;
-
-    private ProductService productService;
-
-    private ResourceBundle resourceBundle;
-
     private static final Logger log = LoggerFactory.getLogger(DishAddCommand.class);
-
     private static final MultipartConfigElement MULTI_PART_CONFIG = new MultipartConfigElement("C:/Users/olegl/IdeaProjects/Restaurant_Levochkin_Servlet/src/main/webapp/images");
+    private final DishService dishService;
+    private final ProductService productService;
 
     public DishAddCommand(DishService dishService, ProductService productService) {
         this.dishService = dishService;
@@ -42,7 +36,6 @@ public class DishAddCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws Exception {
-        resourceBundle = ResourceBundle.getBundle("property/messages", CommandUtility.getSessionLocale(request));
         String contentType = request.getContentType();
 
         String name = "";

@@ -13,7 +13,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class MoneyCheckOrderUserCommand implements Command {
-
     private final DishService dishService;
     private final OrderService orderService;
     private final ProductService productService;
@@ -26,7 +25,7 @@ public class MoneyCheckOrderUserCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws Exception {
-        Long ind = Long.valueOf(request.getParameter("ind"));
+        final Long ind = Long.valueOf(request.getParameter("ind"));
         request.setAttribute("index", ind);
         Map<Dish, Long> orderClient = new HashMap<>();
 
@@ -78,6 +77,7 @@ public class MoneyCheckOrderUserCommand implements Command {
                 .map(product -> enoughtProducts.containsKey(product.getProduct())
                         ? enoughtProducts.put(product.getProduct(), enoughtProducts.get(product.getProduct()) + 1)
                         : enoughtProducts.put(product.getProduct(), 1)).collect(Collectors.toSet());
+
         return enoughtProducts;
     }
 }

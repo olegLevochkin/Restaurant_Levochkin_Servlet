@@ -3,8 +3,8 @@ package com.example.restaurant.controller.validators;
 public class NameValidator extends Validator<String> {
     private final SimpleResult FAILED;
 
-    private Integer minLength;
-    private Integer maxLength;
+    private final Integer minLength;
+    private final Integer maxLength;
 
     public NameValidator(Integer min, Integer max, String message) {
         this.minLength = min;

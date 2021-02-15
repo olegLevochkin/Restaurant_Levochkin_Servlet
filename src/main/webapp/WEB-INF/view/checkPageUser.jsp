@@ -7,11 +7,11 @@
 <fmt:setBundle basename="property/messages"/>
 
 <html lang="en">
+
 <head>
+    <meta charset="UTF-8">
     <title><fmt:message key="nav.odering">Odering</fmt:message></title>
-    <link rel="shortcut icon"
-          href="https://e7.pngegg.com/pngimages/359/699/png-clipart-favicon-computer-icons-icon-design-share-icon-globalization-text-logo.png">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/main.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

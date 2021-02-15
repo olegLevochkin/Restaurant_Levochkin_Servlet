@@ -16,10 +16,10 @@ import java.util.List;
 import java.util.Optional;
 
 public class OrderAddToCard implements Command {
-    private UserService userService;
-    private DishService dishService;
-    private OrderService orderService;
     private static final Logger log = LoggerFactory.getLogger(OrderAddToCard.class);
+    private final UserService userService;
+    private final DishService dishService;
+    private final OrderService orderService;
 
     public OrderAddToCard(UserService userService, DishService dishService, OrderService orderService) {
         this.userService = userService;
@@ -30,16 +30,16 @@ public class OrderAddToCard implements Command {
     @Override
     public String execute(HttpServletRequest request) throws Exception {
 
-        HttpSession session = request.getSession();
+        final HttpSession session = request.getSession();
         String username = "";
-        String dish = request.getParameter("dish");
+        final String dish = request.getParameter("dish");
 
         if (userService.getByUsername((String) session.getAttribute("username")) != null) {
             username = (String) session.getAttribute("username");
             log.info(String.format("Find user: %s", session.getAttribute("username")));
         }
 
-        Optional<Long> notCompletedOrderId = orderService.getUnCompletedForUser(username);
+        final Optional<Long> notCompletedOrderId = orderService.getUnCompletedForUser(username);
         OrderDish orderDish;
 
         if (notCompletedOrderId.isPresent()) {

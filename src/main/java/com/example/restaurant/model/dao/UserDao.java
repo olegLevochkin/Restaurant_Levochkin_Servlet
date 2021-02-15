@@ -15,6 +15,9 @@ public interface UserDao extends GenericDao<User>{
     Long findUserId(String username);
 
     void saveNewUser(User user) ;
+
     void saveBestProduct(User user) ;
+
     void payForOrder(BigInteger sum, String username) throws SQLException, BankTransactionException;
+
 }

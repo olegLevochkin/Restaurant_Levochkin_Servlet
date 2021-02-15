@@ -8,9 +8,9 @@ import java.sql.SQLException;
 
 public class JDBCDaoFactory extends DaoFactory {
 
-    private DataSource dataSource = JDBCConnectionManager.getDataSource();
+    private final DataSource dataSource = JDBCConnectionManager.getDataSource();
 
-    public Connection getConnection(){
+    public Connection getConnection() {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {

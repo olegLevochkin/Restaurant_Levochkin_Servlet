@@ -10,10 +10,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon"
-          href="https://e7.pngegg.com/pngimages/359/699/png-clipart-favicon-computer-icons-icon-design-share-icon-globalization-text-logo.png">
     <title><fmt:message key="reg.title">Registration</fmt:message></title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css"/>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -55,17 +53,8 @@
             <c:if test="${requestScope.valid_Error != null}">
                 <h3 class="error"><c:out value="${requestScope.valid_Error}"/></h3>
             </c:if>
-<%--            <c:if test="${requestScope.first_name_error != null}">--%>
-<%--                <h3 class="error"><c:out value="${requestScope.first_name_error}"/></h3>--%>
-<%--            </c:if>--%>
-<%--            <c:if test="${requestScope.last_name_error != null}">--%>
-<%--                <h3 class="error"><c:out value="${requestScope.last_name_error}"/></h3>--%>
-<%--            </c:if>--%>
-<%--            <c:if test="${requestScope.password_error != null}">--%>
-<%--                <h3 class="error"><c:out value="${requestScope.password_error}"/></h3>--%>
-<%--            </c:if>--%>
 
-            <form autocomplete="off" id="reg-form" method="post" name="form" novalidate>
+            <form autocomplete="off" id="reg-form" method="post" name="form">
 
                 <div class="form-group">
                     <label id="usernameLabel" for="username">

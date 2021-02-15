@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 
 public class AdminConfirmCommand implements Command {
-    private final OrderService orderService;
     private static final Logger log = LoggerFactory.getLogger(AdminConfirmCommand.class);
+    private final OrderService orderService;
 
     public AdminConfirmCommand(OrderService orderService) {
         this.orderService = orderService;
@@ -16,10 +16,10 @@ public class AdminConfirmCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws Exception {
-        Long ind = Long.valueOf(request.getParameter("orderID"));
+        final Long ind = Long.valueOf(request.getParameter("orderID"));
         orderService.confirm(ind);
         log.info("Admin confirm order");
 
-        return "/WEB-INF/view/adminOrder.jsp";
+        return "redirect:menu";
     }
 }

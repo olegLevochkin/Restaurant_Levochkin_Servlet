@@ -12,10 +12,8 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class LoginCommand implements Command {
-
-    private final UserService userService;
-
     private static final Logger log = LoggerFactory.getLogger(LoginCommand.class);
+    private final UserService userService;
 
     public LoginCommand(UserService userService) {
         this.userService = userService;
@@ -24,13 +22,13 @@ public class LoginCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
 
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("property/messages", CommandUtility.getSessionLocale(request));
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle("property/messages", CommandUtility.getSessionLocale(request));
+        final String username = request.getParameter("username");
+        final String password = request.getParameter("password");
 
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        if (Objects.isNull(username) || Objects.isNull(password)) {
+        if (username == null || password == null) {
             log.info("Render the login page");
+
             return "/WEB-INF/view/login.jsp";
         }
 
@@ -59,7 +57,7 @@ public class LoginCommand implements Command {
             session.setAttribute("username", user.getUsername());
             session.setAttribute("balance", user.getBalance());
             session.setAttribute("roles", user.getAuthorities());
-            log.info("authorization successful");
+            log.info("Authorization successful");
 
             return "redirect:/menu";
         } else {

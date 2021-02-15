@@ -10,8 +10,8 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 
 public class BalanceReplenishCommand implements Command {
-    private final UserService userService;
     private static final Logger log = LoggerFactory.getLogger(BalanceReplenishCommand.class);
+    private final UserService userService;
 
     public BalanceReplenishCommand(UserService userService) {
         this.userService = userService;
@@ -19,7 +19,7 @@ public class BalanceReplenishCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) throws Exception {
-        HttpSession session = request.getSession();
+        final HttpSession session = request.getSession();
         String username = "";
 
         if (userService.getByUsername((String) session.getAttribute("username")) != null) {
@@ -29,7 +29,7 @@ public class BalanceReplenishCommand implements Command {
         User user = userService.getByUsername(username);
 
         BigDecimal moneyToAdd;
-        if (request.getParameter("moneyToAdd").matches("\\d*")) {
+        if (!request.getParameter("moneyToAdd").equals("") && request.getParameter("moneyToAdd").matches("\\d*")) {
             moneyToAdd = BigDecimal.valueOf(Long.parseLong(request.getParameter("moneyToAdd")));
             if (moneyToAdd.compareTo(BigDecimal.ZERO) < 0) {
                 request.setAttribute("balanceError", "true");

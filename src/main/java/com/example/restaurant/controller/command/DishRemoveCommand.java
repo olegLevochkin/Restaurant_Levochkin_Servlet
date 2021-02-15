@@ -8,9 +8,8 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 
 public class DishRemoveCommand implements Command {
-    private final DishService dishService;
-
     private static final Logger log = LoggerFactory.getLogger(DishRemoveCommand.class);
+    private final DishService dishService;
 
     public DishRemoveCommand(DishService dishService) {
         this.dishService = dishService;

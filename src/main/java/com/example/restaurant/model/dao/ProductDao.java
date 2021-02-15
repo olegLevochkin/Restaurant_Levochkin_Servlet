@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface ProductDao extends GenericDao<Product> {
     void save(Product product);
+
     void updateProducts(Product product);
 
     List<String> getProductsFromOrder(Long orderID);

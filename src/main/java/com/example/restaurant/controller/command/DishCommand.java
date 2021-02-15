@@ -1,9 +1,7 @@
 package com.example.restaurant.controller.command;
 
 import com.example.restaurant.services.DishService;
-import com.example.restaurant.services.OrderService;
 import com.example.restaurant.services.ProductService;
-import com.example.restaurant.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,20 +10,18 @@ import java.util.ResourceBundle;
 
 public class DishCommand implements Command {
 
+    private static final Logger log = LoggerFactory.getLogger(DishCommand.class);
     private final DishService dishService;
     private final ProductService productService;
-    private ResourceBundle resourceBundle;
 
-    private static final Logger log = LoggerFactory.getLogger(DishCommand.class);
-
-    public DishCommand( DishService dishService, ProductService productService) {
+    public DishCommand(DishService dishService, ProductService productService) {
         this.dishService = dishService;
         this.productService = productService;
     }
 
     @Override
     public String execute(HttpServletRequest request) throws Exception {
-        resourceBundle = ResourceBundle.getBundle("property/messages", CommandUtility.getSessionLocale(request));
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("property/messages", CommandUtility.getSessionLocale(request));
 
         request.setAttribute("language", resourceBundle.getLocale().getLanguage());
         request.setAttribute("dishes", dishService.getAllDishes());

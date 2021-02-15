@@ -21,7 +21,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public class JDBCDishDao implements DishDao {
-    private Connection connection;
+    private final Connection connection;
 
     public JDBCDishDao(Connection connection) {
         this.connection = connection;
@@ -73,7 +73,7 @@ public class JDBCDishDao implements DishDao {
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
@@ -258,9 +258,6 @@ public class JDBCDishDao implements DishDao {
         }
     }
 
-//    private static final String EXTRACT_PRODUCTS_ID_QUERY = "SELECT dish_products_for_dish.products_for_dish_id AS \"dish_products_for_dish.products_for_dish_id\"\n" +
-//            "FROM dish_products_for_dish where dish_products_for_dish.dishes_id = ?";
-
     private static final String EXTRACT_PRODUCTS_QUERY = "SELECT dish_products_for_dish.dishes_id AS \"dish_products_for_dish.dishes_id\",\n" +
             "product.id AS \"product.id\",\n" +
             "product.amount_have AS \"product.amount_have\",\n" +
@@ -284,7 +281,6 @@ public class JDBCDishDao implements DishDao {
             Dish dish = dishMapper.extractFromResultSet(rss);
             dishes.put(counter, dish);
             counter++;
-//            dishMapper.makeUnique(dishes, dish);
         }
 
         for (Dish e : dishes.values()) {

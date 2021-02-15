@@ -10,14 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class RegistrationCommand implements Command {
-
-    private final UserService userService;
-
     private static final Logger log = LoggerFactory.getLogger(RegistrationCommand.class);
+    private final UserService userService;
 
     public RegistrationCommand(UserService userService) {
         this.userService = userService;
@@ -25,21 +22,18 @@ public class RegistrationCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("property/messages",
+        final ResourceBundle resourceBundle = ResourceBundle.getBundle("property/messages",
                 CommandUtility.getSessionLocale(request));
 
         NameValidator nameValidator = new NameValidator(6, 30,
                 resourceBundle.getString("valid.username"));
 
-        String firstName = request.getParameter("firstName");
-        String lastName = request.getParameter("lastName");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        final String firstName = request.getParameter("firstName");
+        final String lastName = request.getParameter("lastName");
+        final String username = request.getParameter("username");
+        final String password = request.getParameter("password");
 
-        if (!(Objects.nonNull(firstName) &&
-                Objects.nonNull(lastName) &&
-                Objects.nonNull(username) &&
-                Objects.nonNull(password))) {
+        if (!(firstName != null && lastName != null && username != null && password != null)) {
             log.info("Render the registration page");
 
             return "/WEB-INF/view/register.jsp";
@@ -63,11 +57,11 @@ public class RegistrationCommand implements Command {
                 return handleRegistrationError(request, firstName, lastName, username, password);
             }
         } catch (Exception e) {
+            log.info("Error checking username for duplicate");
             e.printStackTrace();
         }
 
-        nameValidator = new NameValidator(2, 30,
-                resourceBundle.getString("valid.first"));
+        nameValidator = new NameValidator(2, 30, resourceBundle.getString("valid.first"));
         result = nameValidator.validate(firstName);
 
         if (!result.isOk()) {
@@ -103,12 +97,13 @@ public class RegistrationCommand implements Command {
 
         String hashedPassword = DigestUtils.md5Hex(password).toUpperCase();
 
-        User user = new User(firstName, lastName, username, hashedPassword);
+        final User user = new User(firstName, lastName, username, hashedPassword);
 
         try {
             userService.registerUser(user);
             log.info("Save new user");
         } catch (Exception e) {
+            log.info("Error while saving user");
             e.printStackTrace();
         }
 

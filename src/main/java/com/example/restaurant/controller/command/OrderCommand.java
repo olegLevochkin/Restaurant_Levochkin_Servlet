@@ -21,11 +21,11 @@ import java.util.stream.Collectors;
 
 public class OrderCommand implements Command {
 
-    private UserService userService;
-    private DishService dishService;
-    private ProductService productService;
-    private OrderService orderService;
     private static final Logger log = LoggerFactory.getLogger(OrderCommand.class);
+    private final UserService userService;
+    private final DishService dishService;
+    private final ProductService productService;
+    private final OrderService orderService;
 
     public OrderCommand(UserService userService, DishService dishService, ProductService productService, OrderService orderService) {
         this.userService = userService;
@@ -37,14 +37,14 @@ public class OrderCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) throws Exception {
 
-        HttpSession session = request.getSession();
+        final HttpSession session = request.getSession();
         String username = "";
 
         if (userService.getByUsername((String) session.getAttribute("username")) != null) {
             username = (String) session.getAttribute("username");
         }
 
-        Optional<Long> notCompletedOrderId = orderService.getUnCompletedForUser(username);
+        final Optional<Long> notCompletedOrderId = orderService.getUnCompletedForUser(username);
         OrderDish orderDish;
 
         if (notCompletedOrderId.isPresent()) {
@@ -107,7 +107,7 @@ public class OrderCommand implements Command {
                         e.printStackTrace();
                     }
                     return null;
-                })
+                }).filter(Objects::nonNull)
                 .map(s -> enoughtProducts.containsKey(s.getProduct())
                         ? enoughtProducts.put(s.getProduct(), enoughtProducts.get(s.getProduct()) + 1)
                         : enoughtProducts.put(s.getProduct(), 1)).collect(Collectors.toList());

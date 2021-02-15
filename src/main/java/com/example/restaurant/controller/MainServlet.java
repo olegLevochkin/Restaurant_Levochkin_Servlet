@@ -7,7 +7,7 @@ import com.example.restaurant.controller.command.Command;
 import com.example.restaurant.controller.command.DishAddCommand;
 import com.example.restaurant.controller.command.DishCommand;
 import com.example.restaurant.controller.command.DishRemoveCommand;
-import com.example.restaurant.controller.command.IndexCommand;
+import com.example.restaurant.controller.command.MenuCommand;
 import com.example.restaurant.controller.command.LoginCommand;
 import com.example.restaurant.controller.command.LogoutCommand;
 import com.example.restaurant.controller.command.BalancePageCommand;
@@ -36,6 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 
 public class MainServlet extends HttpServlet {
@@ -56,7 +57,7 @@ public class MainServlet extends HttpServlet {
         commands.put("/add", new DishCommand( dishService, productService));
         commands.put("/add/addDish", new DishAddCommand(dishService, productService));
         commands.put("/add/removeDish", new DishRemoveCommand(dishService));
-        commands.put("/menu", new IndexCommand(userService, dishService));
+        commands.put("/menu", new MenuCommand(userService, dishService));
         commands.put("/users", new UsersCommand(userService));
         commands.put("/order", new OrderCommand(userService, dishService, productService, orderService));
         commands.put("/order/AddToCard", new OrderAddToCard(userService, dishService, orderService));
@@ -87,7 +88,7 @@ public class MainServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        if (page.contains("redirect")) {
+        if (Objects.requireNonNull(page).contains("redirect")) {
             response.sendRedirect(request.getContextPath() + request.getServletPath() + page.replace("redirect:", ""));
         } else {
             request.getRequestDispatcher(page).forward(request, response);
