@@ -1,0 +1,30 @@
+package com.example.restaurant.controller.listeners;
+
+
+import javax.servlet.annotation.WebListener;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
+import java.util.HashSet;
+
+@WebListener()
+public class SessionListener implements
+        HttpSessionListener{
+
+    @Override
+    public void sessionCreated(HttpSessionEvent httpSessionEvent) {
+
+    }
+
+    @Override
+    public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
+        HashSet<String> loggedUsers = (HashSet<String>) httpSessionEvent
+                .getSession().getServletContext()
+                .getAttribute("loggedUsers");
+        String userName = (String) httpSessionEvent.getSession()
+                .getAttribute("userName");
+        loggedUsers.remove(userName);
+        httpSessionEvent.getSession().setAttribute("loggedUsers", loggedUsers);
+    }
+
+}
+
