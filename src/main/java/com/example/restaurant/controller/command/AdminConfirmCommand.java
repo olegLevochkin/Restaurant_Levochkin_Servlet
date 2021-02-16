@@ -20,6 +20,6 @@ public class AdminConfirmCommand implements Command {
         orderService.confirm(ind);
         log.info("Admin confirm order");
 
-        return "redirect:menu";
+        return "redirect:/menu";
     }
 }

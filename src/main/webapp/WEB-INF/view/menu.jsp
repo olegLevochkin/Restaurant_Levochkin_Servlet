@@ -29,7 +29,7 @@
                         <fmt:message key="nav.home">Home</fmt:message>
                     </a>
                 </li>
-                <c:if test="${isAuthorize == 2}">
+                <c:if test="${isAuthorize == 2 || isAuthorize == 1}">
                     <li>
                         <a href="${pageContext.request.contextPath}/app/order">
                             <fmt:message key="nav.order">Order</fmt:message>
@@ -45,11 +45,14 @@
                             <fmt:message key="nav.odering">Odering</fmt:message>
                         </a>
                     </li>
-                    <li>
-                        <a href="${pageContext.request.contextPath}/app/adminOrder">
-                            <fmt:message key="nav.admin">Admin</fmt:message>
-                        </a>
-                    </li>
+                    <c:if test="${isAuthorize == 2}">
+                        <li>
+                            <a href="${pageContext.request.contextPath}/app/adminOrder">
+                                <fmt:message key="nav.admin">Admin</fmt:message>
+                            </a>
+                        </li>
+                    </c:if>
+
                 </c:if>
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -85,7 +88,7 @@
             <th scope="col"><fmt:message key="dish.dishName">name of Dish</fmt:message></th>
             <th scope="col"><fmt:message key="dish.price">price of dish</fmt:message></th>
             <th scope="col"><fmt:message key="dish.products">Products</fmt:message></th>
-            <c:if test="${isAuthorize == 2}">
+            <c:if test="${isAuthorize == 2 || isAuthorize == 1}">
                 <th scope="col"><fmt:message key="dish.getNow">GetNow</fmt:message></th>
             </c:if>
         </tr>
@@ -116,7 +119,7 @@
                         <fmt:message key="prod.${product.product}"></fmt:message>
                     </c:forEach>
                 </td>
-                <c:if test="${isAuthorize == 2}">
+                <c:if test="${isAuthorize == 2 || isAuthorize == 1}">
                     <td>
                         <form action="${pageContext.request.contextPath}/app/order/AddToCard" method="post">
                             <button class="btn btn-success enter" name="dish" value="${dish.name}" type="submit"

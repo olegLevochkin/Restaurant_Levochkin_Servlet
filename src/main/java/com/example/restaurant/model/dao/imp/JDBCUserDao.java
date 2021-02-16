@@ -141,7 +141,7 @@ public class JDBCUserDao implements UserDao {
     }
 
     private static final String CREATE_QUERY = "INSERT INTO users (first_name, last_name," +
-            " username, password) VALUES (? ,?, ?, ?)";
+            " username, password, balance) VALUES (? ,?, ?, ?, ?)";
 
     private static final String INSERT_INTO_AUTHORITIES_QUERY = "INSERT INTO user_authorities" +
             " (user_id, authorities) VALUES (?, ?)";
@@ -155,6 +155,7 @@ public class JDBCUserDao implements UserDao {
             ps.setString(2, entity.getLastName());
             ps.setString(3, entity.getUsername());
             ps.setString(4, entity.getPassword());
+            ps.setBigDecimal(5, BigDecimal.ZERO);
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
 
@@ -266,7 +267,7 @@ public class JDBCUserDao implements UserDao {
             if (user.getBalance().compareTo(BigDecimal.valueOf(sum.intValue())) < 0) {
                 throw new BankTransactionException("The money in the account is not enough");
             } else {
-                User admin = findByUsername("someuser");
+                User admin = findByUsername("FirstUser");
                 admin.setBalance(admin.getBalance().add(BigDecimal.valueOf(sum.intValue())));
                 sum = sum.multiply(BigInteger.valueOf(-1));
                 user.setBalance(user.getBalance().add(BigDecimal.valueOf(sum.intValue())));
